@@ -1,3 +1,5 @@
+from math import isqrt
+from xmlrpc.client import UNSUPPORTED_ENCODING
 import numpy as np
 from implementations import *
 
@@ -69,7 +71,8 @@ def load_data(set_of_features):
     #"C:\Users\Alfred\'OneDrive - Lund University'\CS-433\Project1\train.csv"
     #"/Users/axelandersson/Documents/Teknik/ML_epfl/ML_course/project_ML/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/train.csv"
     #"~/../../mnt/c/Users/Alfred/OneDrive\ -\ Lund\ University/CS-433/Project1/train.csv"
-    path_train_dataset = "train.csv"
+    #path_train_dataset = "train.csv"
+    path_train_dataset = "/Users/eric/Downloads/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/train.csv"
     columns = [i for i in range(2, 32)]
     tx = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=columns)
     strArr = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=1, dtype=str)
@@ -88,7 +91,9 @@ def load_test_data(set_of_features):
     """
     set_of_features: 0, 1, 2
     """
-    path_train_dataset = "/Users/axelandersson/Documents/Teknik/ML_epfl/ML_course/project_ML/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/test.csv"
+    path_train_dataset = "/Users/eric/Downloads/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/test.csv"
+
+    #path_train_dataset = "/Users/axelandersson/Documents/Teknik/ML_epfl/ML_course/project_ML/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/test.csv"
     columns = [i for i in range(2, 32)]
     tx = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=columns)
     strArr = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=1, dtype=str)
@@ -104,48 +109,13 @@ def load_test_data(set_of_features):
     else:
         return y_2, tx_2, id_2            
 
-def create_even_data(labels, tx):
-    """
+def remove_outliers(tx):
     
-    """
-    labels_0 = np.where(labels==0)[0]
-    labels_1 = np.where(labels==1)[0]
-    labels_1 = labels_1[1:labels_0.shape[0]]
-    labels_index = np.concatenate([labels_0, labels_1])
-    labels = labels[labels_index]
-    tx = tx[labels_index]
-    return labels, tx
-
-def remove_outliers(tx, toRemove = -1):
-    
-    p95, p5 = np.nanpercentile(tx, [97, 3], axis=0) #Set 0, 2: percentil(97,3), Set 1: percentil(98,2) 
-    if toRemove == -1:
-        for i in range(len(tx[1,:])):
-            tx[np.where(tx[:, i] > p95[i]),i] = p95[i]
-            tx[np.where(tx[:, i] < p5[i]),i] = p5[i]
-    else:
-        tx[np.where(tx[:, toRemove] > p95[toRemove]),toRemove] = p95[toRemove]
-        tx[np.where(tx[:, toRemove] < p5[toRemove]),toRemove] = p5[toRemove]
-    return tx
-
-def remove_outliers2(tx):
-
-    p95, p5 = np.percentile(tx, [95, 5], axis=0)
-    ind0, ind1 , ind2 = [], [0,17,18,19], [0,4,5,6,12,22,23,24,25,26,27]
-    ind0 = []
-    print(tx.shape[1])
-    print(ind1)
-    if tx.shape[1] == 18:
-        ind = ind0
-    elif tx.shape[1] == 22:
-        ind = ind1
-    elif tx.shape[1] == 30:
-        ind = ind2
-    else:
-        ind = ind2
-        print("hmm")
+    p90, p10 = np.nanpercentile(tx, [90, 10], axis=0) 
+    iqr = p90-p10
+    upper_b = p10 + 1.5*iqr
+    lower_b = p90 - 1.5*iqr
     for i in range(len(tx[1,:])):
-        tx[np.where(tx[:, i] > p95[i]),i] = p95[i]
-        tx[np.where(tx[:, i] < p5[i]),i] = p5[i]
-
+        tx[np.where(tx[:, i] > upper_b[i]),i] = upper_b[i]
+        tx[np.where(tx[:, i] < lower_b[i]),i] = lower_b[i]
     return tx

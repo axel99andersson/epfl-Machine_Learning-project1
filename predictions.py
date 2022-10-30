@@ -22,8 +22,12 @@ def predict_feature_group(feature_nbr, degree, lambda_ ):
     y, X, id = load_test_data(feature_nbr)
     y_train, X_train, id_train = load_data(feature_nbr)
 
+    X[X == -999] = np.nan
+    X_train[X_train == -999] = np.nan
+
     X = remove_outliers(X)
     X_train = remove_outliers(X_train)
+    
     
     X = standardize_data(X, -999)
     X_train = standardize_data(X_train, -999)
@@ -36,11 +40,11 @@ def predict_feature_group(feature_nbr, degree, lambda_ ):
     return prediction, id
 
 
-prediction_0, id_0 = predict_feature_group(0, 12, 0.000151)
+prediction_0, id_0 = predict_feature_group(0, 12, 3.82e-06)
 
-prediction_1, id_1 = predict_feature_group(1, 12, 4.32e-7)
+prediction_1, id_1 = predict_feature_group(1, 12, 0.0001225)
 
-prediction_2, id_2 = predict_feature_group(2, 12, 5.6234132519034906e-11)
+prediction_2, id_2 = predict_feature_group(2, 12, 6.875e-7)
 
 final_id = np.concatenate((id_0, id_1, id_2))
 predictions = np.concatenate((prediction_0, prediction_1, prediction_2))

@@ -78,8 +78,9 @@ def ridge_regression(y, tx, lambda_):
         loss: the loss of the model (Mean squared error)
         w: the model parameters as numpy arrays of shape=(D, )
     """
+    print("Hej")
     lambda_prime = 2*len(y)*lambda_
-    w = np.linalg.solve(tx.T@tx - lambda_prime*np.eye(tx.shape[1]), tx.T@y)
+    w = np.linalg.solve(tx.T@tx + lambda_prime*np.eye(tx.shape[1]), tx.T@y)
     loss = compute_MSE_loss(y, tx, w)
     
     return w, loss
