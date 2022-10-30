@@ -66,7 +66,10 @@ def load_data(set_of_features):
     """
     set_of_features: 0, 1, 2
     """
-    path_train_dataset = "/Users/axelandersson/Documents/Teknik/ML_epfl/ML_course/project_ML/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/train.csv"
+    #"C:\Users\Alfred\'OneDrive - Lund University'\CS-433\Project1\train.csv"
+    #"/Users/axelandersson/Documents/Teknik/ML_epfl/ML_course/project_ML/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/train.csv"
+    #"~/../../mnt/c/Users/Alfred/OneDrive\ -\ Lund\ University/CS-433/Project1/train.csv"
+    path_train_dataset = "train.csv"
     columns = [i for i in range(2, 32)]
     tx = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=columns)
     strArr = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=1, dtype=str)

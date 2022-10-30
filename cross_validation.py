@@ -37,7 +37,8 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     
     loss_te = compute_MSE_loss(y_test, x_test, w)
     model_accuracy = compute_model_accuracy(w, x_test, y_test)
-    return loss_tr, loss_te, model_accuracy
+    model_train_accuracy = compute_model_accuracy(w, x_train, y_train)
+    return loss_tr, loss_te, model_accuracy, model_train_accuracy
 
 def cross_validation_one_feature(y, x, k_indices, k, lambda_, degree, feature_index):
     """return the loss of ridge regression for a fold corresponding to k_indices
