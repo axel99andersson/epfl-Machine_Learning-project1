@@ -14,3 +14,5 @@ model.py: This file contains code with which finds the best values for hyper-par
 cross_validation.py: This files contains functions which helps us perfoms cross-validation in the model.py file
 
 preprocessing.py: This file contains helper functions to pre-process the data.
+
+implementations.py: This file contains machine learning methods which are used in model.py
