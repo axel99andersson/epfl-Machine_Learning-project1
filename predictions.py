@@ -46,7 +46,9 @@ prediction_1, id_1 = predict_feature_group(1, 12, 0.0001225)
 
 prediction_2, id_2 = predict_feature_group(2, 12, 6.875e-7)
 
-final_id = np.concatenate((id_0, id_1, id_2))
-predictions = np.concatenate((prediction_0, prediction_1, prediction_2))
+prediction_3, id_3 = predict_feature_group(3,12, 6.875e-7)
+
+final_id = np.concatenate((id_0, id_1, id_2, id_3))
+predictions = np.concatenate((prediction_0, prediction_1, prediction_2, prediction_3))
 
 create_csv_submission(final_id, predictions, "higgs_prediction_try2.csv" )

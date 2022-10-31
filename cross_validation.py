@@ -63,14 +63,10 @@ def cross_validation_one_feature(y, x, k_indices, k, lambda_, degree, feature_in
     x_train = np.delete(x, k_indices[k], 0)
     
     x_train, x_test = build_poly_one_feature(x_train,x_test,degree,feature_index)
-    # x_train = standarize_data(x_train,-999)
-    # x_test = standardize_data(x_test, -999)
+
 
     w, loss_tr = ridge_regression(y_train,x_train,lambda_)
-   # w, loss_tr = least_squares(y_train,x_train)
 
-    #initial_w = np.zeros(x_train.shape[1])
-    #w, loss_tr, gradnorms, weights = reg_logistic_regression(y_train, x_train, lambda_, initial_w, 1e-2, 600)
     loss_te = compute_MSE_loss(y_test, x_test, w)
     model_accuracy = compute_model_accuracy(w, x_test, y_test)
 
@@ -87,10 +83,8 @@ def build_k_indices(y, k_fold, seed):
     Returns:
         A 2D array of shape=(k_fold, N/k_fold) that indicates the data indices for each fold
 
-    >>> build_k_indices(np.array([1., 2., 3., 4.]), 2, 1)
-    array([[3, 2],
-        [0, 1]])
     """
+    
     num_row = y.shape[0]
     interval = int(num_row / k_fold)
     np.random.seed(seed)
