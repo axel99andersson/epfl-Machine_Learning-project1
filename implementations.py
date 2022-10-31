@@ -2,7 +2,10 @@ import numpy as np
 import datetime as time
 import sys as sys
 import matplotlib.pyplot as plt
-#from cross_validation import compute_model_accuracy
+
+"""
+Different machine learning methods
+"""
 
 def mean_squared_error_gd(y, tx, initial_w, max_iters, gamma):
     """The Gradient Descent (GD) algorithm.
@@ -147,7 +150,16 @@ def gradient_step(y, tx, w, gamma): #returns new w
 
 
 def compute_log_loss(y,tx,w,lambda_=0):
+    """
+    Compute the log-loss
+     Args:
+        y: numpy array of shape=(N, )
+        tx: numpy array of shape=(N,D)
+        w: numpy array of shape=(D,). The vector of model parameters.
 
+    Returns:
+        the value of the loss (a scalar), corresponding to the input parameters w.
+    """
     tx_prod_w = np.clip(tx@w, -20, 20)
     N = y.shape[0]
     

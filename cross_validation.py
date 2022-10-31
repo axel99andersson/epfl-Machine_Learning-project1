@@ -3,10 +3,11 @@ import numpy as np
 from implementations import *
 from matplotlib import pyplot as plt
 from preprocessing import *
-"""
-Ändra model ridge_regression / log_reg_regression
 
 """
+Functions to to cross-validation
+"""
+
 def cross_validation(y, x, k_indices, k, lambda_, degree):
     """return the loss of ridge regression for a fold corresponding to k_indices
     
@@ -30,8 +31,6 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     x_train = np.delete(x, k_indices[k], 0)
     y_test = y_test.reshape(y_test.shape[0],1)
     y_train = y_train.reshape(y_train.shape[0],1)
-   # print(y_test.shape)
-    #print(y_train.shape)
     
     x_train, x_test = build_entire_poly(x_train,x_test,degree)
     

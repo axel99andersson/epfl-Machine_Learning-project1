@@ -1,6 +1,10 @@
 import numpy as np
 from implementations import *
 
+"""
+Contains functions to pre-process the data
+"""
+
 def standardize_data(data, indicator):
     """
     Removes missing data from an array, data. Returns an array with nan instead of
@@ -66,11 +70,7 @@ def load_data(set_of_features):
     ----------------------
     returns: ndarray, ndarray, ndarray
     """
-    #"C:\Users\Alfred\'OneDrive - Lund University'\CS-433\Project1\train.csv"
-    #"/Users/axelandersson/Documents/Teknik/ML_epfl/ML_course/project_ML/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/train.csv"
-    #"~/../../mnt/c/Users/Alfred/OneDrive\ -\ Lund\ University/CS-433/Project1/train.csv"
-    #path_train_dataset = "train.csv"
-    path_train_dataset = "/Users/eric/Downloads/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/train.csv"
+    path_train_dataset = "/train.csv"
     columns = [i for i in range(2, 32)]
     tx = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=columns)
     strArr = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=1, dtype=str)
@@ -95,9 +95,8 @@ def load_test_data(set_of_features):
     ----------------------
     returns: ndarray, ndarray, ndarray
     """
-    path_train_dataset = "/Users/eric/Downloads/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/test.csv"
+    path_train_dataset = "/test.csv"
 
-    #path_train_dataset = "/Users/axelandersson/Documents/Teknik/ML_epfl/ML_course/project_ML/cc4298e0-8560-4475-8bdc-9e618184f064_epfml-project-1/test.csv"
     columns = [i for i in range(2, 32)]
     tx = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=columns)
     strArr = np.genfromtxt(path_train_dataset, delimiter=',', skip_header=1, usecols=1, dtype=str)
