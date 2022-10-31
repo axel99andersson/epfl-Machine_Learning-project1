@@ -1,3 +1,4 @@
+from random import triangular
 import numpy as np
 from implementations import *
 from matplotlib import pyplot as plt
@@ -27,15 +28,23 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     y_test, x_test = y[k_indices][k], x[k_indices][k]
     y_train =  np.delete(y, k_indices[k])
     x_train = np.delete(x, k_indices[k], 0)
+    y_test = y_test.reshape(y_test.shape[0],1)
+    y_train = y_train.reshape(y_train.shape[0],1)
+   # print(y_test.shape)
+    #print(y_train.shape)
     
     x_train, x_test = build_entire_poly(x_train,x_test,degree)
     
+    initial_w = np.zeros(x_train.shape[1])
+    initial_w = initial_w.reshape(len(initial_w),1)
+    
     # Ridge Regression or Logistic Ridge Regression
     w, loss_tr = ridge_regression(y_train,x_train,lambda_)
-    #initial_w = np.zeros(x_train.shape[1])
-    #w, loss_tr, gradnorms, weights = reg_logistic_regression(y_train, x_train, lambda_, initial_w, 1e-2, 600)
-    
+   # w, loss_tr = reg_logistic_regression(y_train,x_train,lambda_,initial_w,100,1)
+       
     loss_te = compute_MSE_loss(y_test, x_test, w)
+    #loss_te = compute_log_loss(y_test,x_test,w,lambda_)
+
     model_accuracy = compute_model_accuracy(w, x_test, y_test)
     model_train_accuracy = compute_model_accuracy(w, x_train, y_train)
     return loss_tr, loss_te, model_accuracy, model_train_accuracy
@@ -84,7 +93,6 @@ def build_k_indices(y, k_fold, seed):
         A 2D array of shape=(k_fold, N/k_fold) that indicates the data indices for each fold
 
     """
-    
     num_row = y.shape[0]
     interval = int(num_row / k_fold)
     np.random.seed(seed)
